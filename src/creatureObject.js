@@ -1,11 +1,11 @@
 function creatureObject() {
-
+	this.constants = constantValues();
+	this.objectType = this.constants.typeCreature;
+	this.alertRange = 10;
+	
 	this.currentAction = '';
 	this.currentPosition = {};
-	this.alertRange = 10;
-	this.constants = constantValues();
 	this.alerts = [];
-	this.objectType = this.constants.typeCreature;
 }
 
 creatureObject.prototype.objectType = '';
@@ -15,15 +15,11 @@ creatureObject.prototype.isPredator = function() {
 };
 
 creatureObject.prototype.walk = function(direction) {
-	if (!direction) {
-		direction = this.createRandomDirection();
-	}
-
-	this.currentPosition.x += direction.x;
-	this.currentPosition.y += direction.y;
-
+	this._validateAndSetDirection(direction);
+	this._validateAndSetAlertRange();
 	this.currentAction = this.constants.actionWalk;
 };
+
 
 creatureObject.prototype.setPosition = function(newPosition) {
 	this.currentPosition = newPosition;
@@ -43,6 +39,7 @@ creatureObject.prototype.createRandomDirection = function() {
 
 creatureObject.prototype.look = function(alertType) {
 	 //var filteredAlerts = this.getAlertsByType(alertType);
+
 	var filteredAlerts = [];
 	for(var idx=0;idx<this.alerts.length;idx++) {
 		var myPos = this.currentPosition;
@@ -51,7 +48,7 @@ creatureObject.prototype.look = function(alertType) {
 		var xDiff = Math.abs(myPos.x - alertPos.x);
 		var yDiff = Math.abs(myPos.y - alertPos.y);
 
-		if (xDiff <= this.alertRange && yDiff <= this.alertRange) {
+		if (xDiff <= this._getAlertRange() && yDiff <= this.getAlertRange()) {
 			filteredAlerts.push(this.alerts[idx]);
 		}
 	}
@@ -69,9 +66,30 @@ creatureObject.prototype.getAlertsByType = function(alertType) {
 };
 
 creatureObject.prototype.setAlertRange = function(range) {
-	this.alertRange = range;	
+	this.currentAlertRange = range;	
 };
 
 creatureObject.prototype.addAlert = function(alertObject) {
 	this.alerts.push(alertObject);
 }
+
+creatureObject.prototype._getAlertRange = function(){
+	if(!this.currentAlertRange) {
+		this.currentAlertRange = this.alertRange;
+	}
+
+	return this.currentAlertRange;
+};
+
+creatureObject.prototype._validateAndSetAlertRange = function(){
+
+};
+
+creatureObject.prototype._validateAndSetDirection = function(direction){
+	if (!direction) {
+		direction = this.createRandomDirection();
+	}
+
+	this.currentPosition.x += direction.x;
+	this.currentPosition.y += direction.y;
+};

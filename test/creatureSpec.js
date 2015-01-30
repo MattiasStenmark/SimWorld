@@ -11,7 +11,7 @@ describe("creatureObject", function() {
 	describe("initial functions", function() {
 		it("should be able to set alertRange", function() {
 			creature.setAlertRange(5);
-			expect(creature.alertRange).toEqual(5);
+			expect(creature.currentAlertRange).toEqual(5);
 		});
 
 		it("should be able to add a creature to world", function(){
