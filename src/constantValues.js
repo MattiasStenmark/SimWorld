@@ -3,7 +3,6 @@ function constantValues() {
 
 	publicModule.actionWalk = 'walking';
 	
-	publicModule.directionAny = 'any';
 	publicModule.directionNorth = {x:0,y:1};
 	publicModule.directionSouth = {x:0,y:-1};
 	

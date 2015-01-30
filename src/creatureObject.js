@@ -15,7 +15,7 @@ creatureObject.prototype.isPredator = function() {
 };
 
 creatureObject.prototype.walk = function(direction) {
-	if (!direction || direction === this.constants.directionAny) {
+	if (!direction) {
 		direction = this.createRandomDirection();
 	}
 
