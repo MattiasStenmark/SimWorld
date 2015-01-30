@@ -1,95 +1,115 @@
+
+
 function creatureObject() {
-	this.constants = constantValues();
-	this.objectType = this.constants.typeCreature;
-	this.alertRange = 10;
+	var constants = constantValues();
+	var objectType = constants.typeCreature;
+	var alertRange = 10;
 	
-	this.currentAction = '';
-	this.currentPosition = {};
-	this.alerts = [];
-}
-
-creatureObject.prototype.objectType = '';
-
-creatureObject.prototype.isPredator = function() {
-	throw new Error('not Implemented just yet');
-};
-
-creatureObject.prototype.walk = function(direction) {
-	this._validateAndSetDirection(direction);
-	this._validateAndSetAlertRange();
-	this.currentAction = this.constants.actionWalk;
-};
+	var currentAlertRange = 0;
+	var currentAction = '';
+	var currentPosition = {};
+	var alerts = [];
 
 
-creatureObject.prototype.setPosition = function(newPosition) {
-	this.currentPosition = newPosition;
-};
+	walk = function(direction){
 
-creatureObject.prototype.createRandomDirection = function() {
-	var newDirection = {};
-	do {
-		newDirection = {
-			x : Math.floor((Math.random() * 3) - 1),
-			y : Math.floor((Math.random() * 3) - 1)
-		};
-	} while (newDirection.x == 0 && newDirection.y == 0);
-	
-	return newDirection;
-};
+		_validateAndSetDirection(direction);
+		_validateAndSetAlertRange();
+		currentAction = constants.actionWalk;
+	};
 
-creatureObject.prototype.look = function(alertType) {
-	 //var filteredAlerts = this.getAlertsByType(alertType);
+	look = function(alertType) {
+	 //var filteredAlerts = getAlertsByType(alertType);
 
-	var filteredAlerts = [];
-	for(var idx=0;idx<this.alerts.length;idx++) {
-		var myPos = this.currentPosition;
-		var alertPos = this.alerts[idx].currentPosition;;
+		var filteredAlerts = [];
+		for(var idx=0;idx<alerts.length;idx++) {
+			var myPos = currentPosition;
+			var alertPos = alerts[idx].currentPosition;;
+			
+			var xDiff = Math.abs(myPos.x - alertPos.x);
+			var yDiff = Math.abs(myPos.y - alertPos.y);
+
+			if (xDiff <= getAlertRange() && yDiff <= getAlertRange()) {
+				filteredAlerts.push(alerts[idx]);
+			}
+		}
+		return filteredAlerts;
+	};
+
+
+	isPredator = function() {
+		throw new Error('not Implemented just yet');
+	};
+
+	setPosition = function(newPosition) {
+		currentPosition = newPosition;
+	};
+
+	createRandomDirection = function() {
+		var newDirection = {};
+		do {
+			newDirection = {
+				x : Math.floor((Math.random() * 3) - 1),
+				y : Math.floor((Math.random() * 3) - 1)
+			};
+		} while (newDirection.x == 0 && newDirection.y == 0);
 		
-		var xDiff = Math.abs(myPos.x - alertPos.x);
-		var yDiff = Math.abs(myPos.y - alertPos.y);
+		return newDirection;
+	};
 
-		if (xDiff <= this._getAlertRange() && yDiff <= this.getAlertRange()) {
-			filteredAlerts.push(this.alerts[idx]);
+
+
+	getAlertsByType = function(alertType) {
+		var filteredAlerts = [];
+		for(var idx=0;idx<alerts.length;idx++) {
+			if (alerts[idx].alertType === alertType) {
+				filteredAlerts.push(alerts[idx]);
+			}
 		}
-	}
-	return filteredAlerts;
-};
+		return filteredAlerts;
+	};
 
-creatureObject.prototype.getAlertsByType = function(alertType) {
-	var filteredAlerts = [];
-	for(var idx=0;idx<this.alerts.length;idx++) {
-		if (this.alerts[idx].alertType === alertType) {
-			filteredAlerts.push(this.alerts[idx]);
+	addAlert = function(alertObject) {
+		alerts.push(alertObject);
+	};
+
+	setAlertRange = function(range) {
+		currentAlertRange = range;	
+	};
+
+	getAlertRange = function(){
+		if(!currentAlertRange) {
+			currentAlertRange = alertRange;
 		}
-	}
-	return filteredAlerts;
-};
 
-creatureObject.prototype.setAlertRange = function(range) {
-	this.currentAlertRange = range;	
-};
+		return currentAlertRange;
+	};
 
-creatureObject.prototype.addAlert = function(alertObject) {
-	this.alerts.push(alertObject);
+	_validateAndSetAlertRange = function(){
+
+	};
+
+	_validateAndSetDirection = function(direction){
+		if (!direction) {
+			direction = createRandomDirection();
+		}
+
+		currentPosition.x += direction.x;
+		currentPosition.y += direction.y;
+	};
+
+
+	return {
+		walk: walk,
+		look: look,
+		setPosition: setPosition,
+		setAlertRange: setAlertRange,
+		getAlertRange: getAlertRange,
+		addAlert: addAlert
+	};
 }
 
-creatureObject.prototype._getAlertRange = function(){
-	if(!this.currentAlertRange) {
-		this.currentAlertRange = this.alertRange;
-	}
 
-	return this.currentAlertRange;
-};
 
-creatureObject.prototype._validateAndSetAlertRange = function(){
 
-};
 
-creatureObject.prototype._validateAndSetDirection = function(direction){
-	if (!direction) {
-		direction = this.createRandomDirection();
-	}
-
-	this.currentPosition.x += direction.x;
-	this.currentPosition.y += direction.y;
-};
