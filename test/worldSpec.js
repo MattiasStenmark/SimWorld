@@ -9,4 +9,12 @@ describe("worldObject", function(){
 		world.setSize(100);
 		expect(world.getSize()).toEqual({minX: -100, maxX:100, minY:-100, maxY:100});
 	});
+
+	describe("in the world", function(){
+		it("should be able to add a creature at random position depending on world size", function(){
+
+		});
+
+
+	})
 })
