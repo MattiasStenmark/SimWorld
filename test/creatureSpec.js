@@ -28,7 +28,7 @@ describe("creatureObject", function() {
 
 		it("should be able to walk", function() {
 			creature.walk();
-			expect(creature.getCurrentAction()).toEqual(constants.actionWalk);
+			expect(creature.getAction()).toEqual(constants.actionWalk);
 		});
 	
 		it("should be able to go north", function() {
@@ -53,13 +53,15 @@ describe("creatureObject", function() {
 
 	describe("Looking", function() {
 		beforeEach(function() {
-				var c1 = new creatureObject();
-				c1.setPosition({x:10,y:5});
-				creature.addAlert(c1);
+			creature.setBaseAlertRange(20);
 
-				var c2 = new creatureObject();
-				c2.setPosition({x:5,y:-7});
-				creature.addAlert(c2);
+			var c1 = new creatureObject();
+			c1.setPosition({x:21,y:5});
+			creature.addAlert(c1);
+
+			var c2 = new creatureObject();
+			c2.setPosition({x:5,y:-7});
+			creature.addAlert(c2);
 		});  
 
 		it("should be able to look", function() {
@@ -68,24 +70,31 @@ describe("creatureObject", function() {
 		});
 
 	 	it("should be able to see creatures nearby", function() {
-			creature.setAlertRange(12);
+			creature.setBaseAlertRange(30);
 
 			var creatures = creature.look(constants.alertTypeCreature)
 			expect(creatures.length).toEqual(2);
 		});
 
 		it("should be able to see creatures nearby based on alertRange", function() {
-			creature.setAlertRange(7);
+			creature.setBaseAlertRange(14);
 
 			var creatures = creature.look(constants.alertTypeCreature)
 			expect(creatures.length).toEqual(1);
 		});
 
-//		it("alertRange should be less if walking", function() {
-//			creature.setAlertRange(10);
-//			creature.walk();
-//			expect(creature.alertRange).toBeLessThan(10);
-//		});
+		it("alertRange should be less if walking", function() {
+			creature.setBaseAlertRange(10);
+			creature.walk();
+			expect(creature.getAlertRange()).toBe(5);
+		});
+
+		it("alertRange should be max if looking", function() {
+			creature.setBaseAlertRange(10);
+			creature.setAlertRange(1);
+			creature.look();
+			expect(creature.getAlertRange()).toBe(10);
+		})
 
 	});
 

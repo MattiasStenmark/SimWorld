@@ -5,7 +5,7 @@ function creatureObject() {
 	var stuff = behaviour();
 
 	var objectType = constants.typeCreature;
-	var alertRange = 10;
+	var alertRange = 1;
 	
 	var currentAlertRange = 0;
 	var currentAction = '';
@@ -14,30 +14,20 @@ function creatureObject() {
 
 
 	walk = function(direction){
-
-		stuff.validateAndSetPosition(currentPosition, direction);
-		stuff.validateAndSetAlertRange(currentAlertRange);
+		var me = this;
 		currentAction = constants.actionWalk;
+		stuff.validateAndSetPosition(currentPosition, direction);
+		stuff.setNewAlertRangeByAction(me);
 	};
 
 	look = function(alertType) {
-	 //var filteredAlerts = getAlertsByType(alertType);
 	  	var me = this;
-		var filteredAlerts = [];
-		for(var idx=0;idx<alerts.length;idx++) {
-			var myPos = me.getCurrentPosition();
-			var alertPos = alerts[idx].getCurrentPosition();
-			
-			var xDiff = Math.abs(myPos.x - alertPos.x);
-			var yDiff = Math.abs(myPos.y - alertPos.y);
-
-			if (xDiff <= me.getAlertRange() && yDiff <= me.getAlertRange()) {
-				filteredAlerts.push(alerts[idx]);
-			}
-		}
+	  	me.setAction(constants.actionLook);
+	  	stuff.setNewAlertRangeByAction(me);
+		
+		var filteredAlerts = stuff.look(me, alertType);
 		return filteredAlerts;
 	};
-
 
 	isPredator = function() {
 		throw new Error('not Implemented just yet');
@@ -47,28 +37,8 @@ function creatureObject() {
 		currentPosition = newPosition;
 	};
 
-	createRandomDirection = function() {
-		var newDirection = {};
-		do {
-			newDirection = {
-				x : Math.floor((Math.random() * 3) - 1),
-				y : Math.floor((Math.random() * 3) - 1)
-			};
-		} while (newDirection.x == 0 && newDirection.y == 0);
-		
-		return newDirection;
-	};
-
-
-
 	getAlertsByType = function(alertType) {
-		var filteredAlerts = [];
-		for(var idx=0;idx<alerts.length;idx++) {
-			if (alerts[idx].alertType === alertType) {
-				filteredAlerts.push(alerts[idx]);
-			}
-		}
-		return filteredAlerts;
+		return stuff.getAlertsByType(me, alertType);
 	};
 
 	addAlert = function(alertObject) {
@@ -79,36 +49,47 @@ function creatureObject() {
 		currentAlertRange = range;	
 	};
 
+	setBaseAlertRange = function(range) {
+		alertRange = range;	
+	};
+	getBaseAlertRange = function() {
+		return alertRange;
+	};
 	getAlertRange = function(){
 		if(!currentAlertRange) {
 			currentAlertRange = alertRange;
 		}
-
 		return currentAlertRange;
 	};
 
 	getAlerts = function(){
 		return alerts;
-	}
+	};
 
-	getCurrentAction = function(){
+	getAction = function(){
 		return currentAction;
-	}
+	};
+
+	setAction = function(action) {
+		currentAction = action;
+	};
 
 	getCurrentPosition = function(){
 		return currentPosition;
 	}
-
 
 	return {
 		walk: walk,
 		look: look,
 		setPosition: setPosition,
 		setAlertRange: setAlertRange,
+		setBaseAlertRange: setBaseAlertRange,
+		getBaseAlertRange: getBaseAlertRange,
 		getAlertRange: getAlertRange,
 		addAlert: addAlert,
 		getAlerts: getAlerts,
-		getCurrentAction: getCurrentAction,
+		getAction: getAction,
+		setAction: setAction,
 		getCurrentPosition: getCurrentPosition
 	};
 }
