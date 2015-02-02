@@ -20,21 +20,11 @@ function creatureObject() {
 		currentAction = constants.actionWalk;
 	};
 
+
 	look = function(alertType) {
 	 //var filteredAlerts = getAlertsByType(alertType);
 	  	var me = this;
-		var filteredAlerts = [];
-		for(var idx=0;idx<alerts.length;idx++) {
-			var myPos = me.getCurrentPosition();
-			var alertPos = alerts[idx].getCurrentPosition();
-			
-			var xDiff = Math.abs(myPos.x - alertPos.x);
-			var yDiff = Math.abs(myPos.y - alertPos.y);
-
-			if (xDiff <= me.getAlertRange() && yDiff <= me.getAlertRange()) {
-				filteredAlerts.push(alerts[idx]);
-			}
-		}
+		var filteredAlerts = stuff.look(me, alertType);
 		return filteredAlerts;
 	};
 
