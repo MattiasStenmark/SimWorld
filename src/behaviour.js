@@ -45,7 +45,7 @@ behaviour = function() {
 	};
 
 	module.getAlertsByType = function(me, alertType) {
-		var alerts = me.alerts;
+		var alerts = me.properties.alerts;
 		var filteredAlerts = [];
 
  		for(var idx=0;idx<me.alerts.length;idx++) {
@@ -61,7 +61,7 @@ behaviour = function() {
 		var c = constantValues();
 		var modification = 1.0;
 		
-		switch (creature.getAction()) {
+		switch (creature.getCurrentAction()) {
 			case c.actionWalk:
 				modification = 0.5;
 				break;

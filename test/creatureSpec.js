@@ -28,7 +28,7 @@ describe("creatureObject", function() {
 
 		it("should be able to walk", function() {
 			creature.walk();
-			expect(creature.getAction()).toEqual(constants.actionWalk);
+			expect(creature.getCurrentAction()).toEqual(constants.actionWalk);
 		});
 	
 		it("should be able to go north", function() {
