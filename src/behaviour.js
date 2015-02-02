@@ -57,11 +57,11 @@ behaviour = function() {
 	};
 
 
-	module.getNewAlertRangeByAction = function(alertRange, actionType){
+	module.setNewAlertRangeByAction = function(creature){
 		var c = constantValues();
 		var modification = 1.0;
 		
-		switch (actionType) {
+		switch (creature.getAction()) {
 			case c.actionWalk:
 				modification = 0.5;
 				break;
@@ -70,8 +70,8 @@ behaviour = function() {
 				break;
 		}
 
-		var newRange = Math.floor(alertRange * modification);
-		return newRange;
+		var newRange = Math.floor(creature.getBaseAlertRange() * modification);
+		creature.setAlertRange(newRange);
 	};
 
 	return module;

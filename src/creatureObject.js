@@ -14,15 +14,16 @@ function creatureObject() {
 
 
 	walk = function(direction){
+		var me = this;
 		currentAction = constants.actionWalk;
 		stuff.validateAndSetPosition(currentPosition, direction);
-		currentAlertRange = stuff.getNewAlertRangeByAction(alertRange, currentAction);
+		stuff.setNewAlertRangeByAction(me);
 	};
 
 	look = function(alertType) {
 	  	var me = this;
-	  	currentAction = constants.actionLook;
-	  	currentAlertRange = stuff.getNewAlertRangeByAction(me.getAlertRange(), currentAction);
+	  	me.setAction(constants.actionLook);
+	  	stuff.setNewAlertRangeByAction(me);
 		
 		var filteredAlerts = stuff.look(me, alertType);
 		return filteredAlerts;
@@ -51,7 +52,9 @@ function creatureObject() {
 	setBaseAlertRange = function(range) {
 		alertRange = range;	
 	};
-
+	getBaseAlertRange = function() {
+		return alertRange;
+	};
 	getAlertRange = function(){
 		if(!currentAlertRange) {
 			currentAlertRange = alertRange;
@@ -61,11 +64,15 @@ function creatureObject() {
 
 	getAlerts = function(){
 		return alerts;
-	}
+	};
 
-	getCurrentAction = function(){
+	getAction = function(){
 		return currentAction;
-	}
+	};
+
+	setAction = function(action) {
+		currentAction = action;
+	};
 
 	getCurrentPosition = function(){
 		return currentPosition;
@@ -77,10 +84,12 @@ function creatureObject() {
 		setPosition: setPosition,
 		setAlertRange: setAlertRange,
 		setBaseAlertRange: setBaseAlertRange,
+		getBaseAlertRange: getBaseAlertRange,
 		getAlertRange: getAlertRange,
 		addAlert: addAlert,
 		getAlerts: getAlerts,
-		getCurrentAction: getCurrentAction,
+		getAction: getAction,
+		setAction: setAction,
 		getCurrentPosition: getCurrentPosition
 	};
 }
