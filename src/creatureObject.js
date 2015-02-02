@@ -5,7 +5,7 @@ function creatureObject() {
 	var stuff = behaviour();
 
 	var objectType = constants.typeCreature;
-	var alertRange = 10;
+	var alertRange = 1;
 	
 	var currentAlertRange = 0;
 	var currentAction = '';
@@ -21,6 +21,9 @@ function creatureObject() {
 
 	look = function(alertType) {
 	  	var me = this;
+	  	currentAction = constants.actionLook;
+	  	currentAlertRange = stuff.getNewAlertRangeByAction(me.getAlertRange(), currentAction);
+		
 		var filteredAlerts = stuff.look(me, alertType);
 		return filteredAlerts;
 	};
@@ -43,6 +46,10 @@ function creatureObject() {
 
 	setAlertRange = function(range) {
 		currentAlertRange = range;	
+	};
+
+	setBaseAlertRange = function(range) {
+		alertRange = range;	
 	};
 
 	getAlertRange = function(){
@@ -69,6 +76,7 @@ function creatureObject() {
 		look: look,
 		setPosition: setPosition,
 		setAlertRange: setAlertRange,
+		setBaseAlertRange: setBaseAlertRange,
 		getAlertRange: getAlertRange,
 		addAlert: addAlert,
 		getAlerts: getAlerts,

@@ -60,8 +60,14 @@ behaviour = function() {
 	module.getNewAlertRangeByAction = function(alertRange, actionType){
 		var c = constantValues();
 		var modification = 1.0;
-		if (c.actionWalk) {
-			modification = 0.5;
+		
+		switch (actionType) {
+			case c.actionWalk:
+				modification = 0.5;
+				break;
+			case c.actionLook:
+				modification = 1;
+				break;
 		}
 
 		var newRange = Math.floor(alertRange * modification);

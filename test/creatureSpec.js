@@ -53,13 +53,15 @@ describe("creatureObject", function() {
 
 	describe("Looking", function() {
 		beforeEach(function() {
-				var c1 = new creatureObject();
-				c1.setPosition({x:10,y:5});
-				creature.addAlert(c1);
+			creature.setBaseAlertRange(20);
 
-				var c2 = new creatureObject();
-				c2.setPosition({x:5,y:-7});
-				creature.addAlert(c2);
+			var c1 = new creatureObject();
+			c1.setPosition({x:10,y:5});
+			creature.addAlert(c1);
+
+			var c2 = new creatureObject();
+			c2.setPosition({x:5,y:-7});
+			creature.addAlert(c2);
 		});  
 
 		it("should be able to look", function() {
@@ -86,6 +88,13 @@ describe("creatureObject", function() {
 			creature.walk();
 			expect(creature.getAlertRange()).toBe(5);
 		});
+
+		it("alertRange should be max if looking", function() {
+			creature.setBaseAlertRange(10);
+			creature.setAlertRange(1);
+			creature.look();
+			expect(creature.getAlertRange()).toBe(10);
+		})
 
 	});
 
