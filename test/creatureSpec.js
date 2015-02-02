@@ -28,7 +28,7 @@ describe("creatureObject", function() {
 
 		it("should be able to walk", function() {
 			creature.walk();
-			expect(creature.getAction()).toEqual(constants.actionWalk);
+			expect(creature.getCurrentAction()).toEqual(constants.actionWalk);
 		});
 	
 		it("should be able to go north", function() {
@@ -37,7 +37,7 @@ describe("creatureObject", function() {
 		});
 
 		it("should be able to store its position as coordinates", function() {
-			creature.walk(constants.directionSouth); //Todo: byt ut strängar mot int söder={0,-1} 
+			creature.walk(constants.directionSouth); 
 			expect(creature.getCurrentPosition()).toEqual(constants.directionSouth);
 		});
 

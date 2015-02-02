@@ -1,97 +1,92 @@
 
 
 function creatureObject() {
-	var constants = constantValues();
-	var stuff = behaviour();
-
-	var objectType = constants.typeCreature;
-	var alertRange = 1;
+	var _constants = constantValues();
+	var _stuff = behaviour();
+	var _objectType = _constants.typeCreature;
+	var _baseAlertRange = 1;
 	
 	var currentAlertRange = 0;
 	var currentAction = '';
 	var currentPosition = {};
 	var alerts = [];
 
+	var module = {};
 
-	walk = function(direction){
+	module.getCurrentAlertRange = function(){
+		return currentAlertRange;
+	}
+	module.getCurrentAction = function(){
+		return currentAction;
+	}
+	module.getCurrentPosition = function(){
+		return currentPosition;
+	}
+	module.getAlerts = function(){
+		return alerts;
+	}
+
+	module.walk = function(direction){
 		var me = this;
-		currentAction = constants.actionWalk;
-		stuff.validateAndSetPosition(currentPosition, direction);
-		stuff.setNewAlertRangeByAction(me);
+		me.setAction(_constants.actionWalk);
+		_stuff.validateAndSetPosition(currentPosition, direction);
+		_stuff.setNewAlertRangeByAction(me);
 	};
 
-	look = function(alertType) {
+	module.look = function(alertType) {
 	  	var me = this;
-	  	me.setAction(constants.actionLook);
-	  	stuff.setNewAlertRangeByAction(me);
+	  	me.currentAction = _constants.actionLook;
+	  	_stuff.setNewAlertRangeByAction(me);
 		
-		var filteredAlerts = stuff.look(me, alertType);
+		var filteredAlerts = _stuff.look(me, alertType);
 		return filteredAlerts;
 	};
 
-	isPredator = function() {
+	module.isPredator = function() {
 		throw new Error('not Implemented just yet');
 	};
 
-	setPosition = function(newPosition) {
+	module.setPosition = function(newPosition) {
 		currentPosition = newPosition;
 	};
 
-	getAlertsByType = function(alertType) {
-		return stuff.getAlertsByType(me, alertType);
+	module.setAction = function(action) {
+		currentAction = action;
+	}
+	module.getAlertsByType = function(alertType) {
+		return _stuff.getAlertsByType(me, alertType);
 	};
 
-	addAlert = function(alertObject) {
+	module.addAlert = function(alertObject) {
 		alerts.push(alertObject);
 	};
 
-	setAlertRange = function(range) {
+	module.setAlertRange = function(range) {
 		currentAlertRange = range;	
 	};
 
-	setBaseAlertRange = function(range) {
-		alertRange = range;	
+	module.setBaseAlertRange = function(range) {
+		_baseAlertRange = range;	
 	};
-	getBaseAlertRange = function() {
-		return alertRange;
+	module.getBaseAlertRange = function() {
+		return _baseAlertRange;
 	};
-	getAlertRange = function(){
+	module.getAlertRange = function(){
 		if(!currentAlertRange) {
-			currentAlertRange = alertRange;
+			currentAlertRange = _baseAlertRange;
 		}
 		return currentAlertRange;
 	};
 
-	getAlerts = function(){
+	module.getAlerts = function(){
 		return alerts;
 	};
 
-	getAction = function(){
-		return currentAction;
-	};
-
-	setAction = function(action) {
-		currentAction = action;
-	};
-
-	getCurrentPosition = function(){
+	module.getCurrentPosition = function(){
 		return currentPosition;
 	}
 
-	return {
-		walk: walk,
-		look: look,
-		setPosition: setPosition,
-		setAlertRange: setAlertRange,
-		setBaseAlertRange: setBaseAlertRange,
-		getBaseAlertRange: getBaseAlertRange,
-		getAlertRange: getAlertRange,
-		addAlert: addAlert,
-		getAlerts: getAlerts,
-		getAction: getAction,
-		setAction: setAction,
-		getCurrentPosition: getCurrentPosition
-	};
+	return module;
 }
 
 
