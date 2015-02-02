@@ -2,6 +2,8 @@
 
 function creatureObject() {
 	var constants = constantValues();
+	var stuff = behaviour();
+
 	var objectType = constants.typeCreature;
 	var alertRange = 10;
 	
@@ -13,23 +15,23 @@ function creatureObject() {
 
 	walk = function(direction){
 
-		_validateAndSetDirection(direction);
-		_validateAndSetAlertRange();
+		stuff.validateAndSetPosition(currentPosition, direction);
+		stuff.validateAndSetAlertRange(currentAlertRange);
 		currentAction = constants.actionWalk;
 	};
 
 	look = function(alertType) {
 	 //var filteredAlerts = getAlertsByType(alertType);
-
+	  	var me = this;
 		var filteredAlerts = [];
 		for(var idx=0;idx<alerts.length;idx++) {
-			var myPos = currentPosition;
-			var alertPos = alerts[idx].currentPosition;;
+			var myPos = me.getCurrentPosition();
+			var alertPos = alerts[idx].getCurrentPosition();
 			
 			var xDiff = Math.abs(myPos.x - alertPos.x);
 			var yDiff = Math.abs(myPos.y - alertPos.y);
 
-			if (xDiff <= getAlertRange() && yDiff <= getAlertRange()) {
+			if (xDiff <= me.getAlertRange() && yDiff <= me.getAlertRange()) {
 				filteredAlerts.push(alerts[idx]);
 			}
 		}
@@ -85,18 +87,17 @@ function creatureObject() {
 		return currentAlertRange;
 	};
 
-	_validateAndSetAlertRange = function(){
+	getAlerts = function(){
+		return alerts;
+	}
 
-	};
+	getCurrentAction = function(){
+		return currentAction;
+	}
 
-	_validateAndSetDirection = function(direction){
-		if (!direction) {
-			direction = createRandomDirection();
-		}
-
-		currentPosition.x += direction.x;
-		currentPosition.y += direction.y;
-	};
+	getCurrentPosition = function(){
+		return currentPosition;
+	}
 
 
 	return {
@@ -105,7 +106,10 @@ function creatureObject() {
 		setPosition: setPosition,
 		setAlertRange: setAlertRange,
 		getAlertRange: getAlertRange,
-		addAlert: addAlert
+		addAlert: addAlert,
+		getAlerts: getAlerts,
+		getCurrentAction: getCurrentAction,
+		getCurrentPosition: getCurrentPosition
 	};
 }
 

@@ -1,4 +1,5 @@
 describe("creatureObject", function() {
+	var me = this;
 	var constants = constantValues();
 	var creature;
 	var actionWalk = '';
@@ -18,39 +19,35 @@ describe("creatureObject", function() {
 			var visitor = new creatureObject();
 			visitor.setPosition({x:3,y:0});
 			creature.addAlert(visitor);
-			expect(creature.alerts.length).toBe(1);
+			expect(creature.getAlerts().length).toBe(1);
 		});
 
 	});
-
-
-
-
 
 	describe("Walking", function() {
 
 		it("should be able to walk", function() {
 			creature.walk();
-			expect(creature.currentAction).toEqual(constants.actionWalk);
+			expect(creature.getCurrentAction()).toEqual(constants.actionWalk);
 		});
 	
 		it("should be able to go north", function() {
 			creature.walk(constants.directionNorth);
-			expect(creature.currentPosition).toEqual(constants.directionNorth);
+			expect(creature.getCurrentPosition()).toEqual(constants.directionNorth);
 		});
 
 		it("should be able to store its position as coordinates", function() {
 			creature.walk(constants.directionSouth); //Todo: byt ut strängar mot int söder={0,-1} 
-			expect(creature.currentPosition).toEqual(constants.directionSouth);
+			expect(creature.getCurrentPosition()).toEqual(constants.directionSouth);
 		});
 
 		it("should be able to walk in random direction", function() {
 			var originalPosition = {};
-			originalPosition.x = creature.currentPosition.x;
-			originalPosition.y = creature.currentPosition.y;
+			originalPosition.x = creature.getCurrentPosition().x;
+			originalPosition.y = creature.getCurrentPosition().y;
 			
 			creature.walk();
-			expect(creature.currentPosition).not.toEqual(originalPosition);
+			expect(creature.getCurrentPosition).not.toEqual(originalPosition);
 		});
 	});
 
