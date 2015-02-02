@@ -81,11 +81,11 @@ describe("creatureObject", function() {
 			expect(creatures.length).toEqual(1);
 		});
 
-//		it("alertRange should be less if walking", function() {
-//			creature.setAlertRange(10);
-//			creature.walk();
-//			expect(creature.alertRange).toBeLessThan(10);
-//		});
+		it("alertRange should be less if walking", function() {
+			creature.setAlertRange(10);
+			creature.walk();
+			expect(creature.getAlertRange()).toBe(5);
+		});
 
 	});
 

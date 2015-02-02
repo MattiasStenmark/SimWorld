@@ -14,20 +14,16 @@ function creatureObject() {
 
 
 	walk = function(direction){
-
-		stuff.validateAndSetPosition(currentPosition, direction);
-		stuff.validateAndSetAlertRange(currentAlertRange);
 		currentAction = constants.actionWalk;
+		stuff.validateAndSetPosition(currentPosition, direction);
+		currentAlertRange = stuff.getNewAlertRangeByAction(alertRange, currentAction);
 	};
 
-
 	look = function(alertType) {
-	 //var filteredAlerts = getAlertsByType(alertType);
 	  	var me = this;
 		var filteredAlerts = stuff.look(me, alertType);
 		return filteredAlerts;
 	};
-
 
 	isPredator = function() {
 		throw new Error('not Implemented just yet');
@@ -37,28 +33,8 @@ function creatureObject() {
 		currentPosition = newPosition;
 	};
 
-	createRandomDirection = function() {
-		var newDirection = {};
-		do {
-			newDirection = {
-				x : Math.floor((Math.random() * 3) - 1),
-				y : Math.floor((Math.random() * 3) - 1)
-			};
-		} while (newDirection.x == 0 && newDirection.y == 0);
-		
-		return newDirection;
-	};
-
-
-
 	getAlertsByType = function(alertType) {
-		var filteredAlerts = [];
-		for(var idx=0;idx<alerts.length;idx++) {
-			if (alerts[idx].alertType === alertType) {
-				filteredAlerts.push(alerts[idx]);
-			}
-		}
-		return filteredAlerts;
+		return stuff.getAlertsByType(me, alertType);
 	};
 
 	addAlert = function(alertObject) {
@@ -73,7 +49,6 @@ function creatureObject() {
 		if(!currentAlertRange) {
 			currentAlertRange = alertRange;
 		}
-
 		return currentAlertRange;
 	};
 
@@ -88,7 +63,6 @@ function creatureObject() {
 	getCurrentPosition = function(){
 		return currentPosition;
 	}
-
 
 	return {
 		walk: walk,

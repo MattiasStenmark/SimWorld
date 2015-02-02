@@ -1,6 +1,21 @@
 behaviour = function() {
 	module = {};
 
+
+
+	var createRandomDirection = function() {
+		var newDirection = {};
+		do {
+			newDirection = {
+				x : Math.floor((Math.random() * 3) - 1),
+				y : Math.floor((Math.random() * 3) - 1)
+			};
+		} while (newDirection.x == 0 && newDirection.y == 0);
+		
+		return newDirection;
+	};
+
+
 	module.look = function(me, alertType) {
 		var filteredAlerts = [];
 		var alerts = me.getAlerts();
@@ -29,10 +44,31 @@ behaviour = function() {
 		currentPosition.y += direction.y;
 	};
 
-	module.validateAndSetAlertRange = function(){
-		//Todo:
+	module.getAlertsByType = function(me, alertType) {
+		var alerts = me.alerts;
+		var filteredAlerts = [];
+
+ 		for(var idx=0;idx<me.alerts.length;idx++) {
+			if (alerts[idx].alertType === alertType) {
+				filteredAlerts.push(alerts[idx]);
+			}
+		}
+		return filteredAlerts;
+	};
+
+
+	module.getNewAlertRangeByAction = function(alertRange, actionType){
+		var c = constantValues();
+		var modification = 1.0;
+		if (c.actionWalk) {
+			modification = 0.5;
+		}
+
+		var newRange = Math.floor(alertRange * modification);
+		return newRange;
 	};
 
 	return module;
+
 
 }
