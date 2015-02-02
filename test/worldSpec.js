@@ -12,7 +12,8 @@ describe("worldObject", function(){
 
 	describe("in the world", function(){
 		it("should be able to add a creature at random position depending on world size", function(){
-
+			world.addCreature();
+			expect(world.getCreatures().length).toEqual(1);
 		});
 
 
