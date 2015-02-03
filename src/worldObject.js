@@ -75,6 +75,12 @@ function worldObject() {
 		return true;
 	};
 
+	module.updateAllCreatureStatus = function(action){
+		var creatures = this.getCreatures();
+		for(var idx=0; idx<creatures.length; idx++){
+			creatures[idx].setAction(action);
+		}
+	};
 
 	return module;
 }
