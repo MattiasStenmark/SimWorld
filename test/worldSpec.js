@@ -31,8 +31,10 @@ describe("worldObject", function(){
 				world.addCreatures(100);
 				expect(world.getCreatures().length).toEqual(100);
 			});
+		})
 
-			it("should ask all creatures what they are doing and get an answer from all", function(){
+		describe("when telling creatures to go idle", function(){
+			it("they should all return that they are idle", function(){
 				world.addCreatures(2);
 				world.updateAllCreatureStatus('idle');
 				var creatures = world.getCreatures();
