@@ -33,6 +33,19 @@ function worldObject() {
 		creature.setPosition(position);
 		_creatures.push(creature);
 	};
+	module.addCreatures = function(number){
+		if(!number){
+			return;
+		}
+		var startTime = new Date();
+		for(var idx=0;idx<number;idx++){
+			module.addCreature();
+		}
+		var endTime = new Date();
+		console.log("adding "+number+" creatures: startTime:" 
+			+startTime.getSeconds() + "."+startTime.getMilliseconds()+ "...done: "
+			+endTime.getSeconds() + "."+endTime.getMilliseconds());
+	}
 
 	module.getCreatures = function(){
 		return _creatures;

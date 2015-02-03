@@ -26,6 +26,11 @@ describe("worldObject", function(){
 				var creatureList = world.getCreatures();
 				expect(creatureList[0].getCurrentPosition()).not.toEqual(creatureList[1].getCurrentPosition());
 			})
+
+			it("should be able to add 100 creatures", function(){
+				world.addCreatures(100);
+				expect(world.getCreatures().length).toEqual(100);
+			})
 		})
 	})
 })
