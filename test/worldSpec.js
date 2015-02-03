@@ -20,11 +20,25 @@ describe("worldObject", function(){
 		describe("when adding a creature", function(){
 			it("should not be able to add a creature at the same position as another", function(){
 				var position = world.getRandomPosition();
-				var creature1 = world.addCreature(position);
-				var creature2 = world.addCreature(position);
+				world.addCreature(position);
+				world.addCreature(position);
 				
 				var creatureList = world.getCreatures();
 				expect(creatureList[0].getCurrentPosition()).not.toEqual(creatureList[1].getCurrentPosition());
+			});
+
+			it("should be able to add 100 creatures", function(){
+				world.addCreatures(100);
+				expect(world.getCreatures().length).toEqual(100);
+			});
+
+			it("should ask all creatures what they are doing and get an answer from all", function(){
+				world.addCreatures(2);
+				world.updateAllCreatureStatus('idle');
+				var creatures = world.getCreatures();
+
+				expect(creatures[0].getCurrentAction()).toEqual('idle');
+				expect(creatures[1].getCurrentAction()).toEqual('idle');
 			})
 		})
 	})
