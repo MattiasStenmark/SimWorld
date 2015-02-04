@@ -9,7 +9,7 @@ describe("creatureObject", function() {
 		creature.setPosition({x:0,y:0});
 	});
 
-	describe("initial functions", function() {
+	describe("general functions", function() {
 		it("should be able to set alertRange", function() {
 			creature.setAlertRange(5);
 			expect(creature.getAlertRange()).toEqual(5);
@@ -20,6 +20,14 @@ describe("creatureObject", function() {
 			visitor.setPosition({x:3,y:0});
 			creature.addAlert(visitor);
 			expect(creature.getAlerts().length).toBe(1);
+		});
+
+		it("should set random action by calling setAction with no parameter", function(){
+			creature.setAction('no action');
+			creature.setAction();
+			expect(creature.getCurrentAction()).not.toBe('no action');
+			expect(creature.getCurrentAction()).not.toEqual('');
+			expect(creature.getCurrentAction()).not.toBeUndefined();
 		});
 
 	});

@@ -1,11 +1,9 @@
-
-
 function creatureObject() {
 	var _constants = constantValues();
 	var _stuff = behaviour();
 	var _objectType = _constants.typeCreature;
 	var _baseAlertRange = 1;
-	
+
 	var currentAlertRange = 0;
 	var currentAction = '';
 	var currentPosition = {};
@@ -51,7 +49,13 @@ function creatureObject() {
 	};
 
 	module.setAction = function(action) {
-		currentAction = action;
+		if (action){
+			currentAction = action;
+			return;
+		}
+
+		currentAction = _stuff.getRandomAction();
+
 	}
 	module.getAlertsByType = function(alertType) {
 		return _stuff.getAlertsByType(me, alertType);

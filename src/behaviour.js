@@ -1,6 +1,6 @@
 behaviour = function() {
 	module = {};
-
+	var _constants = new constantValues();
 
 
 	var createRandomDirection = function() {
@@ -73,6 +73,19 @@ behaviour = function() {
 		var newRange = Math.floor(creature.getBaseAlertRange() * modification);
 		creature.setAlertRange(newRange);
 	};
+
+	module.getRandomAction = function(){
+		var actions = [
+			_constants.actionWalk,
+			_constants.actionLook,
+			_constants.actionIdle,
+			_constants.actionEat,
+			_constants.actionRest,
+		];
+
+		var randomIndex = Math.floor(Math.random() * actions.length);
+		return actions[randomIndex];
+	}
 
 	return module;
 

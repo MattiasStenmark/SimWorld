@@ -33,14 +33,24 @@ describe("worldObject", function(){
 			});
 		})
 
-		describe("when telling creatures to go idle", function(){
-			it("they should all return that they are idle", function(){
+		describe("actions", function(){
+			beforeEach(function() {
 				world.addCreatures(2);
+			})
+			it("they should all return that they are idle", function(){
+				
 				world.updateAllCreatureStatus('idle');
 				var creatures = world.getCreatures();
 
 				expect(creatures[0].getCurrentAction()).toEqual('idle');
 				expect(creatures[1].getCurrentAction()).toEqual('idle');
+			})
+
+			it("they should all be able to get a random action", function(){
+				world.updateAllCreatureStatus();
+				var creatures = world.getCreatures();
+				expect(creatures[0].getCurrentAction()).not.toEqual('');
+				expect(creatures[1].getCurrentAction()).not.toEqual('');	
 			})
 		})
 	})
