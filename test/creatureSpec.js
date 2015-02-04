@@ -30,6 +30,14 @@ describe("creatureObject", function() {
 			expect(creature.getCurrentAction()).not.toBeUndefined();
 		});
 
+		it("should maintain action for random turns", function(){
+
+		});
+		
+		it("should get a direction when new action is set", function(){
+
+		});
+
 	});
 
 	describe("Walking", function() {
@@ -57,6 +65,10 @@ describe("creatureObject", function() {
 			creature.walk();
 			expect(creature.getCurrentPosition).not.toEqual(originalPosition);
 		});
+
+		it("should move in set direction", function(){
+			
+		})
 	});
 
 	describe("Looking", function() {
