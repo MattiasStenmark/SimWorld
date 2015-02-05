@@ -87,6 +87,17 @@ behaviour = function() {
 		return actions[randomIndex];
 	}
 
+	module.getRandomActionTurns = function(){
+		var turns = Math.floor(Math.random() * 4) + 1;
+		return turns;
+	}
+
+	module.getRandomDirection = function(){
+		var directions = _constants.directions;
+		var idx = Math.floor(Math.random()*directions.length);
+		return directions[idx];
+	}
+
 	return module;
 
 

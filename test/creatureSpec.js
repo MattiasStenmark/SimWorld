@@ -23,20 +23,35 @@ describe("creatureObject", function() {
 		});
 
 		it("should set random action by calling setAction with no parameter", function(){
-			creature.setAction('no action');
 			creature.setAction();
-			expect(creature.getCurrentAction()).not.toBe('no action');
+			expect(creature.getCurrentAction()).not.toBe('');
 			expect(creature.getCurrentAction()).not.toEqual('');
 			expect(creature.getCurrentAction()).not.toBeUndefined();
 		});
 
 		it("should maintain action for random turns", function(){
+			creature.setAction();
+			var turns = creature.getActionTurns();
 
+			expect(turns).toBeGreaterThan(0);
 		});
 		
-		it("should get a direction when new action is set", function(){
-
+		it("should get a direction when random action is set", function(){
+			creature.setAction();
+			var direction = creature.getCurrentDirection();
+			expect(direction).not.toBeUndefined;
+			expect(direction.x != 0 || direction.y != 0).toBe(true);
 		});
+
+		it("should not get a new action and direction if actionTurns havent reached 0", function(){
+			creature.setAction('walking');
+			var direction = creature.getCurrentDirection();
+			var action = creature.getCurrentAction();
+			creature.setAction();
+
+			expect(creature.getCurrentAction()).toBe(action);
+			expect(creature.getCurrentDirection()).toBe(direction);
+		})
 
 	});
 
