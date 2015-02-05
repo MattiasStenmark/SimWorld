@@ -142,5 +142,22 @@ describe("creatureObject", function() {
 		})
 
 	});
+	
+	describe("When seeing other creature", function(){
+		it("move close to creature", function(){
+			expect(false).toBe(true);
+		});
+
+		it("attack creature when same tile as other creature", function(){
+
+		});
+
+		decribe("When attacking", function(){
+			it("compare fighting value with creature", function(){
+
+			});
+		})
+
+	})
 
 });
