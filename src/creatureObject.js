@@ -35,6 +35,11 @@ function creatureObject() {
 	}
 	module.walk = function(direction){
 		var me = this;
+
+		if (!direction){
+			direction = currentDirection;
+		}
+
 		me.setAction(_constants.actionWalk);
 		_stuff.validateAndSetPosition(currentPosition, direction);
 		_stuff.setNewAlertRangeByAction(me);
@@ -66,7 +71,11 @@ function creatureObject() {
 		currentDirection = _stuff.getRandomDirection();
 		currentAction = this.setCurrentAction(action);
 		currentActionTurns = _stuff.getRandomActionTurns();
-	}
+	};
+
+	module.setActionTurns = function(turns){
+		currentActionTurns = turns;
+	};
 
 	module.setCurrentAction = function(action){
 		if (action){
@@ -75,7 +84,7 @@ function creatureObject() {
 		else {
 			return _stuff.getRandomAction();	
 		}
-	}
+	};
 	module.getAlertsByType = function(alertType) {
 		return _stuff.getAlertsByType(me, alertType);
 	};

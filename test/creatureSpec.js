@@ -82,7 +82,17 @@ describe("creatureObject", function() {
 		});
 
 		it("should move in set direction", function(){
-			
+			creature.walk({x:1,y:1});
+			creature.setActionTurns(2);
+			var currentPos = creature.getCurrentPosition();
+			var currentDirection = creature.getCurrentDirection();
+			var expectedPosition = {
+				x:currentPos.x+currentDirection.x,
+				y:currentPos.x+currentDirection.y
+			};
+
+			creature.walk();
+			expect(creature.getCurrentPosition()).toEqual(expectedPosition);
 		})
 	});
 
