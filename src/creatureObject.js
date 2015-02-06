@@ -1,8 +1,9 @@
-function creatureObject() {
+function creatureObject(id) {
 	var _constants = constantValues();
 	var _stuff = behaviour();
 	var _objectType = _constants.typeCreature;
 	var _baseAlertRange = 1;
+	var _id = id;
 
 	var currentAlertRange = 0;
 	var currentAction = '';
@@ -12,6 +13,10 @@ function creatureObject() {
 
 	var module = {};
 
+
+	module.getId = function(){
+		return _id;
+	}
 	module.getCurrentAlertRange = function(){
 		return currentAlertRange;
 	}
@@ -33,6 +38,10 @@ function creatureObject() {
 	module.getActionTurns = function(){
 		return currentActionTurns;
 	}
+	module.getAlerts = function(){
+		return alerts;
+	};
+
 	module.walk = function(direction){
 		var me = this;
 
@@ -92,7 +101,9 @@ function creatureObject() {
 	module.addAlert = function(alertObject) {
 		alerts.push(alertObject);
 	};
-
+	module.setAlerts = function(alertObjects){
+		alerts = alertObjects;
+	}
 	module.setAlertRange = function(range) {
 		currentAlertRange = range;	
 	};
@@ -109,10 +120,9 @@ function creatureObject() {
 		}
 		return currentAlertRange;
 	};
-
-	module.getAlerts = function(){
-		return alerts;
-	};
+	module.setAlerts = function(newAlerts){
+		alerts = newAlerts;
+	}
 
 
 

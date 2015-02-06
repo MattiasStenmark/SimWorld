@@ -35,7 +35,7 @@ describe("worldObject", function(){
 
 		describe("actions", function(){
 			beforeEach(function() {
-				world.addCreatures(2);
+				world.addCreatures(3);
 			})
 			it("they should all return that they are idle", function(){
 				

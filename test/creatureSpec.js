@@ -144,15 +144,26 @@ describe("creatureObject", function() {
 	});
 	
 	describe("When seeing other creature", function(){
+		beforeEach(function() {
+			creature.setBaseAlertRange(20);
+			
+			var alert1 = new creatureObject();
+			alert1.setPosition({x:creature.getCurrentPosition().x+5, y:creature.getCurrentPosition().y});
+			creature.addAlert(alert1);	
+		});
+
 		it("move close to creature", function(){
-			expect(false).toBe(true);
+			var currentPosition = creature.getCurrentPosition();
+			creature.look();
+
+			expect(creature.getCurrentAction()).toBe(constants.actionWalk);
 		});
 
 		it("attack creature when same tile as other creature", function(){
 
 		});
 
-		decribe("When attacking", function(){
+		describe("When attacking", function(){
 			it("compare fighting value with creature", function(){
 
 			});

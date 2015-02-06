@@ -9,6 +9,7 @@ function constantValues() {
 		
 	publicModule.directionNorth = {x:0,y:1};
 	publicModule.directionSouth = {x:0,y:-1};
+	
 	publicModule.directions = [
 		{x:0,y:1},	//north
 		{x:1,y:1},	//northeast

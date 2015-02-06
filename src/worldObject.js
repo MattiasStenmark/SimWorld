@@ -2,6 +2,8 @@ function worldObject() {
 	var _size = {};
 	var _creatures = []; 
 	var module = {};
+	var index = 0;
+	var helper = new worldHelper();
 
 	module.getSize = function(){
 		return _size;
@@ -23,7 +25,8 @@ function worldObject() {
 	};
 
 	module.addCreature = function(fixedPosition){
-		var creature = new creatureObject();
+		index += 1;
+		var creature = new creatureObject(index);
 
 		var position = fixedPosition;
 		if (!fixedPosition || !this.isUniquePositionInWorld(fixedPosition)){
@@ -82,5 +85,9 @@ function worldObject() {
 		}
 	};
 
+	module.updateAllCreaturesAlertList = function(){
+		var creatures = this.getCreatures();
+		var a = helper.filterAlertListForCreature(this,creatures);
+	}
 	return module;
 }
