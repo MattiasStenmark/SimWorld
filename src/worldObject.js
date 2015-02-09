@@ -82,14 +82,14 @@ function worldObject() {
 		return true;
 	};
 
-	module.updateAllCreatureStatus = function(action){
+	module.signalUpdateAllCreatureStatus = function(action){
 		var creatures = this.getCreatures();
 		for(var idx=0; idx<creatures.length; idx++){
 			creatures[idx].setAction(action);
 		}
 	};
 
-	module.updateAllCreaturesAlertList = function(){
+	module.signalUpdateAllCreaturesAlertList = function(){
 		var isMe = function(me, creature){
 			return me.getId() == creature.getId();
 		}
