@@ -39,7 +39,7 @@ describe("worldObject", function(){
 			})
 			it("they should all return that they are idle", function(){
 				
-				world.signalUpdateAllCreatureStatus('idle');
+				world.signalUpdateAllCreatureActions('idle');
 				var creatures = world.getCreatures();
 
 				expect(creatures[0].getCurrentAction()).toEqual('idle');
@@ -47,7 +47,7 @@ describe("worldObject", function(){
 			})
 
 			it("they should all be able to get a random action", function(){
-				world.signalUpdateAllCreatureStatus();
+				world.signalUpdateAllCreatureActions();
 				var creatures = world.getCreatures();
 				expect(creatures[0].getCurrentAction()).not.toEqual('');
 				expect(creatures[1].getCurrentAction()).not.toEqual('');	
@@ -55,9 +55,7 @@ describe("worldObject", function(){
 		})
 
 		describe("Phase 1: Looking", function(){
-			var c1;
-			var c2;
-			var c3;
+			var c1,c2,c3;
 			beforeEach(function(){
 				// c1 ..... c2 ......c3
 				world.addCreatures("3");
@@ -75,7 +73,6 @@ describe("worldObject", function(){
 				c3.setPosition({x:30,y:0});
 				c3.setAlertRange(20);
 			})
-
 
 			it("All creatures should update their alertlist", function(){
 				world.signalUpdateAllCreaturesAlertList();	
@@ -98,10 +95,13 @@ describe("worldObject", function(){
 				expect(c3List[0].getId()).toEqual(c2.getId());
 			})
 		})
-		describe("Phase 2: Action", function(){
-			it("All creatures should perform actions", function(){
-				world.updateAllCreatu
 
+		describe("Phase 2: Actions", function(){
+			it("All creatures should perform actions", function(){
+				world.addCreatures(1);
+				world.signalUpdateAllCreatureActions();
+
+				expect(world.getCreatures()[0].getCurrentAction()).not.toBe('');
 			})	
 
 

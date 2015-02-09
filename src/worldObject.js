@@ -82,7 +82,7 @@ function worldObject() {
 		return true;
 	};
 
-	module.signalUpdateAllCreatureStatus = function(action){
+	module.signalUpdateAllCreatureActions = function(action){
 		var creatures = this.getCreatures();
 		for(var idx=0; idx<creatures.length; idx++){
 			creatures[idx].setAction(action);
