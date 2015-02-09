@@ -55,8 +55,47 @@ describe("worldObject", function(){
 		})
 
 		describe("Phase: Looking", function(){
-			it("Should set alertlist for creature", function(){
+			var c1;
+			var c2;
+			var c3;
+			beforeEach(function(){
+				// c1 ..... c2 ......c3
+				world.addCreatures("3");
+				var creatures = world.getCreatures();
+				
+				c1 = creatures[0];
+				c1.setPosition({x:0,y:0});
+				c1.setAlertRange(20);
+				
+				c2 = creatures[1];
+				c2.setPosition({x:15,y:0});
+				c2.setAlertRange(20);
+				
+				c3 = creatures[2];
+				c3.setPosition({x:30,y:0});
+				c3.setAlertRange(20);
+			})
 
+
+			it("Should update the alertlist for all creatures", function(){
+				world.updateAllCreaturesAlertList();	
+				var creatures = world.getCreatures();
+				// c1 ..... c2 ......c3
+				//c1 should see one creature (c2)
+				var c1List = creatures[0].getAlerts();
+				expect(c1List.length).toBe(1);
+				expect(c1List[0].getId()).toEqual(c2.getId());
+				
+				//c2 should see two creatures (c1,c3)
+				var c2List = creatures[1].getAlerts();
+				expect(c2List.length).toBe(2);
+				expect(c2List[0].getId()).toEqual(c1.getId());
+				expect(c2List[1].getId()).toEqual(c3.getId());
+
+				//c3 should see one creature (c2)
+				var c3List = creatures[2].getAlerts();
+				expect(c3List.length).toBe(1);
+				expect(c3List[0].getId()).toEqual(c2.getId());
 			})
 		})
 	})

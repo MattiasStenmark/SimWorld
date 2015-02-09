@@ -8,8 +8,7 @@ function worldObject() {
 	var _creatures = []; 
 	var module = {};
 	var index = 0;
-	var helper = new worldHelper();
-
+	
 	module.getSize = function(){
 		return _size;
 	};
@@ -91,8 +90,33 @@ function worldObject() {
 	};
 
 	module.updateAllCreaturesAlertList = function(){
-		var creatures = this.getCreatures();
-		var a = helper.filterAlertListForCreature(this,creatures);
+		var isMe = function(me, creature){
+			return me.getId() == creature.getId();
+		}
+		var isTooFar = function(me, creature, alertRange){
+			var myPos = me.getCurrentPosition();
+			var creaturePos = creature.getCurrentPosition();
+	
+			return (Math.abs(myPos.x-creaturePos.x)) > alertRange;
+		}
+		var allCreatures = this.getCreatures();
+		
+		for(var x=0; x<allCreatures.length; x++){
+			var creature = allCreatures[x];	
+			var alertRange = creature.getAlertRange();
+			var alertList = [];
+			for(var idx=0; idx<allCreatures.length; idx++){
+				if (isMe(creature, allCreatures[idx])){
+					continue;
+				}
+				if (isTooFar(creature, allCreatures[idx], alertRange)){
+					continue;
+				}
+
+				alertList.push(allCreatures[idx]);
+			}
+			creature.setAlerts(alertList);
+		}
 	}
 	return module;
 }
