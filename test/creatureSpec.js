@@ -110,21 +110,23 @@ describe("creatureObject", function() {
 		});  
 
 		it("should be able to look", function() {
-			var alerts = creature.look();
+			creature.look();
+			var alerts = creature.getAlerts();
 			expect(alerts.length).toBeGreaterThan(0);
 		});
 
 	 	it("should be able to see creatures nearby", function() {
 			creature.setBaseAlertRange(30);
-
-			var creatures = creature.look(constants.alertTypeCreature)
+			creature.look();
+			var creatures = creature.getAlerts();
 			expect(creatures.length).toEqual(2);
 		});
 
 		it("should be able to see creatures nearby based on alertRange", function() {
 			creature.setBaseAlertRange(14);
 
-			var creatures = creature.look(constants.alertTypeCreature)
+			creature.look();
+			var creatures = creature.getAlerts();
 			expect(creatures.length).toEqual(1);
 		});
 

@@ -16,7 +16,7 @@ actions = function() {
 	};
 
 
-	module.look = function(me, alertType) {
+	module.look = function(me) {
 		var filteredAlerts = [];
 		var alerts = me.getAlerts();
 

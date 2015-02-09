@@ -33,7 +33,7 @@ describe("worldObject", function(){
 			});
 		})
 
-		describe("actions", function(){
+		describe("actions in general", function(){
 			beforeEach(function() {
 				world.addCreatures(3);
 			})
@@ -51,6 +51,12 @@ describe("worldObject", function(){
 				var creatures = world.getCreatures();
 				expect(creatures[0].getCurrentAction()).not.toEqual('');
 				expect(creatures[1].getCurrentAction()).not.toEqual('');	
+			})
+		})
+
+		describe("Phase: Looking", function(){
+			it("Should set alertlist for creature", function(){
+
 			})
 		})
 	})

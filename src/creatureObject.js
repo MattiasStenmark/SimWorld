@@ -54,13 +54,13 @@ function creatureObject(id) {
 		_actions.setNewAlertRangeByAction(me);
 	};
 
-	module.look = function(alertType) {
+	module.look = function() {
 	  	var me = this;
 	  	me.currentAction = _constants.actionLook;
 	  	_actions.setNewAlertRangeByAction(me);
 		
-		var filteredAlerts = _actions.look(me, alertType);
-		return filteredAlerts;
+		var alerts = _actions.look(me);
+		me.setAlerts(alerts);
 	};
 
 	module.isPredator = function() {
