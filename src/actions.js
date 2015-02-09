@@ -1,4 +1,4 @@
-behaviour = function() {
+actions = function() {
 	module = {};
 	var _constants = new constantValues();
 

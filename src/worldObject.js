@@ -1,3 +1,8 @@
+/*
+	1. Always start with looking! Build alertlist.
+	1. Set Action for all creatures
+*/
+
 function worldObject() {
 	var _size = {};
 	var _creatures = []; 

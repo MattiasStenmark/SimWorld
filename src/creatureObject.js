@@ -1,6 +1,6 @@
 function creatureObject(id) {
 	var _constants = constantValues();
-	var _stuff = behaviour();
+	var _actions = new actions();
 	var _objectType = _constants.typeCreature;
 	var _baseAlertRange = 1;
 	var _id = id;
@@ -50,16 +50,16 @@ function creatureObject(id) {
 		}
 
 		me.setAction(_constants.actionWalk);
-		_stuff.validateAndSetPosition(currentPosition, direction);
-		_stuff.setNewAlertRangeByAction(me);
+		_actions.validateAndSetPosition(currentPosition, direction);
+		_actions.setNewAlertRangeByAction(me);
 	};
 
 	module.look = function(alertType) {
 	  	var me = this;
 	  	me.currentAction = _constants.actionLook;
-	  	_stuff.setNewAlertRangeByAction(me);
+	  	_actions.setNewAlertRangeByAction(me);
 		
-		var filteredAlerts = _stuff.look(me, alertType);
+		var filteredAlerts = _actions.look(me, alertType);
 		return filteredAlerts;
 	};
 
@@ -77,9 +77,9 @@ function creatureObject(id) {
 			return;	
 		}
 
-		currentDirection = _stuff.getRandomDirection();
+		currentDirection = _actions.getRandomDirection();
 		currentAction = this.setCurrentAction(action);
-		currentActionTurns = _stuff.getRandomActionTurns();
+		currentActionTurns = _actions.getRandomActionTurns();
 	};
 
 	module.setActionTurns = function(turns){
@@ -91,11 +91,11 @@ function creatureObject(id) {
 			return action;
 		}
 		else {
-			return _stuff.getRandomAction();	
+			return _actions.getRandomAction();	
 		}
 	};
 	module.getAlertsByType = function(alertType) {
-		return _stuff.getAlertsByType(me, alertType);
+		return _actions.getAlertsByType(me, alertType);
 	};
 
 	module.addAlert = function(alertObject) {

@@ -153,10 +153,7 @@ describe("creatureObject", function() {
 		});
 
 		it("move close to creature", function(){
-			var currentPosition = creature.getCurrentPosition();
-			creature.look();
-
-			expect(creature.getCurrentAction()).toBe(constants.actionWalk);
+			
 		});
 
 		it("attack creature when same tile as other creature", function(){

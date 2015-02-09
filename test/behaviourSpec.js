@@ -1,5 +1,5 @@
-describe("behaviourSpec", function() {
-	var b = new behaviour();
+describe("actionsSpec", function() {
+	var b = new actions();
 	
 	beforeEach(function(){
 
