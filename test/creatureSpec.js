@@ -63,13 +63,6 @@ describe("creatureObject", function() {
 			})
 */
 		}); 
-
-		describe("action should be set based on content in the alertList", function(){
-			it("creature should attack if alertList is not empty", function(){
-
-
-			})
-		})
 	})
 	
 
@@ -167,6 +160,15 @@ describe("creatureObject", function() {
 
 				creature.walk();
 				expect(creature.getCurrentPosition()).toEqual(expectedPosition);
+			})
+		})
+
+		describe("action attacking", function(){
+			it("when creature attacks it stores victim", function(){
+				
+			})
+			it("when creature attacks it moves towards victim", function(){
+
 			})
 		})
 
