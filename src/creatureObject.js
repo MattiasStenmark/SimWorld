@@ -42,6 +42,15 @@ function creatureObject(id) {
 		return alerts;
 	};
 
+	module.evaluateAndSetAction = function(){
+		if(alerts.length > 0){
+			this.setCurrentAction(_constants.actionAttack);
+			return;
+		}
+
+		setAction();
+	};
+
 	module.walk = function(direction){
 		var me = this;
 
@@ -56,10 +65,11 @@ function creatureObject(id) {
 
 	module.look = function() {
 	  	var me = this;
-	  	me.currentAction = _constants.actionLook;
-	  	_actions.setNewAlertRangeByAction(me);
+	  	
+	  	//me.currentAction = _constants.actionLook;
+	  	//_actions.setNewAlertRangeByAction(me);
 		
-		var alerts = _actions.look(me);
+		var alerts = _actions.getAlerts(me);
 		me.setAlerts(alerts);
 	};
 
@@ -74,7 +84,7 @@ function creatureObject(id) {
 	module.setAction = function(action) {
 		if(action || currentActionTurns == 0){
 			currentDirection = _actions.getRandomDirection();
-			currentAction = this.setCurrentAction(action);
+			this.setCurrentAction(action);
 			currentActionTurns = _actions.getRandomActionTurns();
 		}
 		else {
@@ -86,14 +96,16 @@ function creatureObject(id) {
 		currentActionTurns = turns;
 	};
 
+
 	module.setCurrentAction = function(action){
 		if (action){
-			return action;
+			currentAction = action;
 		}
 		else {
-			return _actions.getRandomAction();	
+			currentAction = _actions.getRandomAction();	
 		}
 	};
+
 	module.getAlertsByType = function(alertType) {
 		return _actions.getAlertsByType(me, alertType);
 	};

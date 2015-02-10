@@ -11,57 +11,65 @@ describe("creatureObject", function() {
 
 	describe("Game phase 1: Looking", function(){
 		describe("In order to build the alertList correctly", function() {
-				beforeEach(function() {
-					creature.setBaseAlertRange(20);
+			beforeEach(function() {
+				creature.setBaseAlertRange(20);
 
-					var c1 = new creatureObject();
-					c1.setPosition({x:21,y:5});
-					creature.addAlert(c1);
+				var c1 = new creatureObject();
+				c1.setPosition({x:21,y:5});
+				creature.addAlert(c1);
 
-					var c2 = new creatureObject();
-					c2.setPosition({x:5,y:-7});
-					creature.addAlert(c2);
-				});  
+				var c2 = new creatureObject();
+				c2.setPosition({x:5,y:-7});
+				creature.addAlert(c2);
+			});  
 
-				it("should be able to set alertRange", function() {
-					creature.setAlertRange(5);
-					expect(creature.getAlertRange()).toEqual(5);
-				});
-			
-				it("should be able to look", function() {
-					creature.look();
-					var alerts = creature.getAlerts();
-					expect(alerts.length).toBeGreaterThan(0);
-				});
-
-			 	it("should be able to see creatures nearby", function() {
-					creature.setBaseAlertRange(30);
-					creature.look();
-					var creatures = creature.getAlerts();
-					expect(creatures.length).toEqual(2);
-				});
-
-				it("should be able to see creatures nearby based on alertRange", function() {
-					creature.setBaseAlertRange(14);
-
-					creature.look();
-					var creatures = creature.getAlerts();
-					expect(creatures.length).toEqual(1);
-				});
-
-				it("alertRange should be less if walking", function() {
-					creature.setBaseAlertRange(10);
-					creature.walk();
-					expect(creature.getAlertRange()).toBe(5);
-				});
-
-				it("alertRange should be max if looking", function() {
-					creature.setBaseAlertRange(10);
-					creature.setAlertRange(1);
-					creature.look();
-					expect(creature.getAlertRange()).toBe(10);
-				})
+			it("should be able to set alertRange", function() {
+				creature.setAlertRange(5);
+				expect(creature.getAlertRange()).toEqual(5);
 			});
+		
+			it("should be able to look", function() {
+				creature.look();
+				var alerts = creature.getAlerts();
+				expect(alerts.length).toBeGreaterThan(0);
+			});
+
+		 	it("should be able to see creatures nearby", function() {
+				creature.setBaseAlertRange(30);
+				creature.look();
+				var creatures = creature.getAlerts();
+				expect(creatures.length).toEqual(2);
+			});
+
+			it("should be able to see creatures nearby based on alertRange", function() {
+				creature.setBaseAlertRange(14);
+
+				creature.look();
+				var creatures = creature.getAlerts();
+				expect(creatures.length).toEqual(1);
+			});
+
+			it("alertRange should be less if walking", function() {
+				creature.setBaseAlertRange(10);
+				creature.walk();
+				expect(creature.getAlertRange()).toBe(5);
+			});
+/*
+		it("alertRange should be max if looking", function() {
+				creature.setBaseAlertRange(10);
+				creature.setAlertRange(1);
+				creature.look();
+				expect(creature.getAlertRange()).toBe(10);
+			})
+*/
+		}); 
+
+		describe("action should be set based on content in the alertList", function(){
+			it("creature should attack if alertList is not empty", function(){
+
+
+			})
+		})
 	})
 	
 
@@ -112,7 +120,11 @@ describe("creatureObject", function() {
 			})
 
 			it("action should be set to 'attacking' if alertList is not empty", function(){
-
+				var alert = new creatureObject();
+				creature.addAlert(alert);
+				
+				creature.evaluateAndSetAction();
+				expect(creature.getCurrentAction()).toBe(constants.actionAttack);
 			})
 
 		})

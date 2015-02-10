@@ -6,6 +6,7 @@ function constantValues() {
 	publicModule.actionIdle = 'idle';
 	publicModule.actionEat	= 'eating';
 	publicModule.actionRest = 'resting';
+	publicModule.actionAttack='attacking';
 		
 	publicModule.directionNorth = {x:0,y:1};
 	publicModule.directionSouth = {x:0,y:-1};
