@@ -54,7 +54,7 @@ describe("worldObject", function(){
 			})
 		})
 
-		describe("Phase 1: Looking", function(){
+		describe("Game phase 1: Looking", function(){
 			var c1,c2,c3;
 			beforeEach(function(){
 				// c1 ..... c2 ......c3
@@ -96,7 +96,7 @@ describe("worldObject", function(){
 			})
 		})
 
-		describe("Phase 2: Actions", function(){
+		describe("Game phase 2: Actions", function(){
 			it("All creatures should perform actions", function(){
 				world.addCreatures(1);
 				world.signalUpdateAllCreatureActions();

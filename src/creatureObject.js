@@ -72,14 +72,14 @@ function creatureObject(id) {
 	};
 
 	module.setAction = function(action) {
-		if (currentActionTurns != 0){
-			currentActionTurns -= 1;
-			return;	
+		if(action || currentActionTurns == 0){
+			currentDirection = _actions.getRandomDirection();
+			currentAction = this.setCurrentAction(action);
+			currentActionTurns = _actions.getRandomActionTurns();
 		}
-
-		currentDirection = _actions.getRandomDirection();
-		currentAction = this.setCurrentAction(action);
-		currentActionTurns = _actions.getRandomActionTurns();
+		else {
+			currentActionTurns -= 1;
+		}
 	};
 
 	module.setActionTurns = function(turns){

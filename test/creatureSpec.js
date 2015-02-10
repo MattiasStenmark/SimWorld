@@ -9,7 +9,7 @@ describe("creatureObject", function() {
 		creature.setPosition({x:0,y:0});
 	});
 
-	describe("Phase 1: Looking", function(){
+	describe("Game phase 1: Looking", function(){
 		describe("In order to build the alertList correctly", function() {
 				beforeEach(function() {
 					creature.setBaseAlertRange(20);
@@ -65,8 +65,13 @@ describe("creatureObject", function() {
 	})
 	
 
-	describe("Phase 2: Actions", function(){
+	describe("Game phase 2: Actions", function(){
 		describe("general functions for performing actions", function(){
+			it("creature should be able to store its position as coordinates", function() {
+				creature.walk(constants.directionSouth); 
+				expect(creature.getCurrentPosition()).toEqual(constants.directionSouth);
+			});
+
 			it("random action should be set by calling setAction with no parameter", function(){
 				creature.setAction();
 				expect(creature.getCurrentAction()).not.toBe('');
@@ -88,7 +93,7 @@ describe("creatureObject", function() {
 				expect(direction.x != 0 || direction.y != 0).toBe(true);
 			});
 
-			it("should not get a new action or direction if actionTurns haven't reached 0", function(){
+			it("should not get a new random action or direction if actionTurns haven't reached 0", function(){
 				creature.setAction('walking');
 				var direction = creature.getCurrentDirection();
 				var action = creature.getCurrentAction();
@@ -99,52 +104,57 @@ describe("creatureObject", function() {
 			})
 		})
 
+		describe("validate action based on alertList", function(){
+			it("it must be ok to force a new action even if actionTurns is not zero", function(){
+				creature.setAction();	
+				creature.setAction('dosomething');
+				expect(creature.getCurrentAction()).toBe("dosomething");
+			})
 
+			it("action should be set to 'attacking' if alertList is not empty", function(){
+
+			})
+
+		})
+
+		describe("action walking", function(){
+			it("creature should be able to walk", function() {
+				creature.walk();
+				expect(creature.getCurrentAction()).toEqual(constants.actionWalk);
+			});
+
+			it("creature should be able to go north", function() {
+				creature.setPosition({x:0,y:0});
+				creature.walk(constants.directionNorth);
+				expect(creature.getCurrentPosition()).toEqual(constants.directionNorth);
+			});
+
+			it("creature should be able to walk in random direction", function() {
+				var originalPosition = {};
+				originalPosition.x = creature.getCurrentPosition().x;
+				originalPosition.y = creature.getCurrentPosition().y;
+				
+				creature.walk();
+				expect(creature.getCurrentPosition).not.toEqual(originalPosition);
+			});	
+
+			it("creature should move in set direction", function(){
+				creature.walk({x:1,y:1});
+				creature.setActionTurns(2);
+				var currentPos = creature.getCurrentPosition();
+				var currentDirection = creature.getCurrentDirection();
+				var expectedPosition = {
+					x:currentPos.x+currentDirection.x,
+					y:currentPos.x+currentDirection.y
+				};
+
+				creature.walk();
+				expect(creature.getCurrentPosition()).toEqual(expectedPosition);
+			})
+		})
 
 	})
 
-	describe("Walking", function() {
-
-		it("should be able to walk", function() {
-			creature.walk();
-			expect(creature.getCurrentAction()).toEqual(constants.actionWalk);
-		});
-	
-		it("should be able to go north", function() {
-			creature.walk(constants.directionNorth);
-			expect(creature.getCurrentPosition()).toEqual(constants.directionNorth);
-		});
-
-		it("should be able to store its position as coordinates", function() {
-			creature.walk(constants.directionSouth); 
-			expect(creature.getCurrentPosition()).toEqual(constants.directionSouth);
-		});
-
-		it("should be able to walk in random direction", function() {
-			var originalPosition = {};
-			originalPosition.x = creature.getCurrentPosition().x;
-			originalPosition.y = creature.getCurrentPosition().y;
-			
-			creature.walk();
-			expect(creature.getCurrentPosition).not.toEqual(originalPosition);
-		});
-
-		it("should move in set direction", function(){
-			creature.walk({x:1,y:1});
-			creature.setActionTurns(2);
-			var currentPos = creature.getCurrentPosition();
-			var currentDirection = creature.getCurrentDirection();
-			var expectedPosition = {
-				x:currentPos.x+currentDirection.x,
-				y:currentPos.x+currentDirection.y
-			};
-
-			creature.walk();
-			expect(creature.getCurrentPosition()).toEqual(expectedPosition);
-		})
-	});
-
-	
 	
 	describe("When seeing other creature", function(){
 		beforeEach(function() {
