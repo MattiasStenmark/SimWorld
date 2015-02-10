@@ -1,7 +1,7 @@
 function creatureObject(id) {
-	var _constants = constantValues();
+	var constants = constantValues();
 	var _actions = new actions();
-	var _objectType = _constants.typeCreature;
+	var _objectType = constants.typeCreature;
 	var _baseAlertRange = 1;
 	var _id = id;
 
@@ -10,7 +10,7 @@ function creatureObject(id) {
 	var currentPosition = {};
 	var currentActionTurns = 0;
 	var alerts = [];
-
+	var selectedAlert = {};
 	var module = {};
 
 
@@ -37,14 +37,16 @@ function creatureObject(id) {
 	}
 	module.getActionTurns = function(){
 		return currentActionTurns;
-			}
+	}
 	module.getAlerts = function(){
 		return alerts;
 	};
-
-	module.evaluateAndSetAction = function(){
+	module.getSelectedAlert = function(){
+		return selectedAlert;
+	}
+	module.executeEvaluateAndSetAction = function(){
 		if(alerts.length > 0){
-			this.setAction(_constants.actionAttack);
+			this.setAction(constants.actionAttack);
 		}
 		else {
 			this.setAction();
@@ -58,7 +60,7 @@ function creatureObject(id) {
 			direction = currentDirection;
 		}
 
-		me.setAction(_constants.actionWalk);
+		me.setAction(constants.actionWalk);
 		_actions.validateAndSetPosition(currentPosition, direction);
 		_actions.setNewAlertRangeByAction(me);
 	};
@@ -96,6 +98,14 @@ function creatureObject(id) {
 		}
 	};
 
+	module.executeAction = function(){
+		if(currentAction == constants.actionAttack){
+			var selAlert = this.getAlerts()[0];
+			this.setSelectedAlert(selAlert);
+		}
+
+	}
+
 	module.setActionTurns = function(turns){
 		currentActionTurns = turns;
 	};
@@ -113,7 +123,9 @@ function creatureObject(id) {
 	module.setAlertRange = function(range) {
 		currentAlertRange = range;	
 	};
-
+	module.setSelectedAlert = function(alert){
+		selectedAlert = alert;
+	}
 	module.setBaseAlertRange = function(range) {
 		_baseAlertRange = range;	
 	};
