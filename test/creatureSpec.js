@@ -181,14 +181,19 @@ describe("creatureObject", function() {
 
 				expect(selectedAlert.getId()).toBe(victim.getId());
 			})
-			it("when creature attacks it moves in creature running speed", function(){
-
-			})
 			it("when creature attacks it moves towards victim", function(){
-
+				creature.executeEvaluateAndSetAction();
+				creature.executeAction();
+				var pos = creature.getCurrentPosition();
+				var dir = creature.getCurrentDirection();
+				expect(pos).toBe({x:1,y:1});
+				expect(dir).toBe({x:1,y:1});	
 			})
 			it("when creature is close to victim action sets to fight", function(){
 
+			})
+			it("when creature attacks, it moves in creature running speed", function(){
+				
 			})
 		})
 
