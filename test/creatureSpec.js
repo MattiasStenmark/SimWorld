@@ -63,13 +63,6 @@ describe("creatureObject", function() {
 			})
 */
 		}); 
-
-		describe("action should be set based on content in the alertList", function(){
-			it("creature should attack if alertList is not empty", function(){
-
-
-			})
-		})
 	})
 	
 
@@ -81,7 +74,7 @@ describe("creatureObject", function() {
 			});
 
 			it("creature should be able to get a random action if alertlist is empty", function(){
-				creature.evaluateAndSetAction();
+				creature.executeEvaluateAndSetAction();
 				expect(creature.getCurrentAction()).not.toBe('');
 			})
 
@@ -128,7 +121,7 @@ describe("creatureObject", function() {
 				var alert = new creatureObject();
 				creature.addAlert(alert);
 				
-				creature.evaluateAndSetAction();
+				creature.executeEvaluateAndSetAction();
 				expect(creature.getCurrentAction()).toBe(constants.actionAttack);
 			})
 
@@ -170,32 +163,34 @@ describe("creatureObject", function() {
 			})
 		})
 
-	})
+		describe("action attacking", function(){
+			var victim;
+			beforeEach(function(){
+				creature.setPosition({x:0,y:0});
+				creature.setAlertRange(10);
 
-	
-	describe("When seeing other creature", function(){
-		beforeEach(function() {
-			creature.setBaseAlertRange(20);
-			
-			var alert1 = new creatureObject();
-			alert1.setPosition({x:creature.getCurrentPosition().x+5, y:creature.getCurrentPosition().y});
-			creature.addAlert(alert1);	
-		});
+				victim = new creatureObject({x:2,y:2});
+				victim.setAction(constants.actionIdle);
+				victim.setActionTurns(10);
+				creature.addAlert(victim);
+			})
+			it("when creature attacks it stores victim in variable", function(){
+				creature.executeEvaluateAndSetAction();
+				creature.executeAction();
+				var selectedAlert = creature.getSelectedAlert();
 
-		it("move close to creature", function(){
-			
-		});
+				expect(selectedAlert.getId()).toBe(victim.getId());
+			})
+			it("when creature attacks it moves in creature running speed", function(){
 
-		it("attack creature when same tile as other creature", function(){
+			})
+			it("when creature attacks it moves towards victim", function(){
 
-		});
+			})
+			it("when creature is close to victim action sets to fight", function(){
 
-		describe("When attacking", function(){
-			it("compare fighting value with creature", function(){
-
-			});
+			})
 		})
 
 	})
-
 });
