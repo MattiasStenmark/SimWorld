@@ -37,18 +37,18 @@ function creatureObject(id) {
 	}
 	module.getActionTurns = function(){
 		return currentActionTurns;
-	}
+			}
 	module.getAlerts = function(){
 		return alerts;
 	};
 
 	module.evaluateAndSetAction = function(){
 		if(alerts.length > 0){
-			this.setCurrentAction(_constants.actionAttack);
-			return;
+			this.setAction(_constants.actionAttack);
 		}
-
-		setAction();
+		else {
+			this.setAction();
+		}
 	};
 
 	module.walk = function(direction){
@@ -64,13 +64,8 @@ function creatureObject(id) {
 	};
 
 	module.look = function() {
-	  	var me = this;
-	  	
-	  	//me.currentAction = _constants.actionLook;
-	  	//_actions.setNewAlertRangeByAction(me);
-		
-		var alerts = _actions.getAlerts(me);
-		me.setAlerts(alerts);
+		var alerts = _actions.getAlerts(this);
+		this.setAlerts(alerts);
 	};
 
 	module.isPredator = function() {
@@ -82,9 +77,18 @@ function creatureObject(id) {
 	};
 
 	module.setAction = function(action) {
+		var evaluateCurrentAction = function(action){
+			if (action){
+				return action;
+			}
+			else {
+				return _actions.getRandomAction();
+			}
+		}
+
 		if(action || currentActionTurns == 0){
 			currentDirection = _actions.getRandomDirection();
-			this.setCurrentAction(action);
+			currentAction = evaluateCurrentAction(action);
 			currentActionTurns = _actions.getRandomActionTurns();
 		}
 		else {
@@ -94,16 +98,6 @@ function creatureObject(id) {
 
 	module.setActionTurns = function(turns){
 		currentActionTurns = turns;
-	};
-
-
-	module.setCurrentAction = function(action){
-		if (action){
-			currentAction = action;
-		}
-		else {
-			currentAction = _actions.getRandomAction();	
-		}
 	};
 
 	module.getAlertsByType = function(alertType) {

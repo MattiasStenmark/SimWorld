@@ -80,6 +80,11 @@ describe("creatureObject", function() {
 				expect(creature.getCurrentPosition()).toEqual(constants.directionSouth);
 			});
 
+			it("creature should be able to get a random action if alertlist is empty", function(){
+				creature.evaluateAndSetAction();
+				expect(creature.getCurrentAction()).not.toBe('');
+			})
+
 			it("random action should be set by calling setAction with no parameter", function(){
 				creature.setAction();
 				expect(creature.getCurrentAction()).not.toBe('');
