@@ -9,6 +9,7 @@ function creatureObject(id) {
 	var currentAction = '';
 	var currentPosition = {};
 	var currentActionTurns = 0;
+	var currentDirection = {};
 	var alerts = [];
 	var selectedAlert = {};
 	var module = {};
@@ -61,7 +62,7 @@ function creatureObject(id) {
 		}
 
 		me.setAction(constants.actionWalk);
-		_actions.validateAndSetPosition(currentPosition, direction);
+		me.setPosition(_actions.validateNewPosition(currentPosition, direction));
 		_actions.setNewAlertRangeByAction(me);
 	};
 
@@ -78,6 +79,9 @@ function creatureObject(id) {
 		currentPosition = newPosition;
 	};
 
+	module.setDirection = function(direction){
+		currentDirection = direction;
+	}
 	module.setAction = function(action) {
 		var evaluateCurrentAction = function(action){
 			if (action){
@@ -104,9 +108,20 @@ function creatureObject(id) {
 			var selAlert = me.getAlerts()[0];
 			me.setSelectedAlert(selAlert);
 		}
+		var updateDirection = function(){
+			var alert = me.getSelectedAlert();
+			var newDirection = _actions.getDirectionBasedOnTarget(me.getCurrentPosition(), alert.getCurrentPosition());
+			me.setDirection(newDirection);
+		}
+		var updatePosition = function(){
+			var currentPos = me.getCurrentPosition();
+			var direction  = me.getCurrentDirection();
+			me.setPosition(_actions.validateNewPosition(currentPos, direction));
+		}
 		if(currentAction == constants.actionAttack){
 			updateSelectedAlert();
-
+			updateDirection();
+			updatePosition();
 		}
 
 	}

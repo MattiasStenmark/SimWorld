@@ -35,13 +35,14 @@ actions = function() {
 	};
 
 
-	module.validateAndSetPosition = function(currentPosition, direction){
+	module.validateNewPosition = function(currentPosition, direction){
 		if (!direction) {
 			direction = createRandomDirection();
 		}
 
-		currentPosition.x += direction.x;
-		currentPosition.y += direction.y;
+		return {
+			x:currentPosition.x += direction.x,
+			y:currentPosition.y += direction.y};
 	};
 
 
@@ -59,8 +60,22 @@ actions = function() {
 	};
 
 	module.getDirectionBasedOnTarget = function(basePosition, newPosition){
+		var getPos = function(sum){
+			if (sum == 0){
+				return 0;
+			}
 
-		return {};
+			if (sum < 0) {
+				return -1;}
+			else {
+				return 1;
+			}
+		}	
+
+		var newX = getPos(newPosition.x - basePosition.x);
+		var newY = getPos(newPosition.y - basePosition.y);
+		
+		return {x:newX, y:newY};
 	}
 
 	module.setNewAlertRangeByAction = function(creature){
