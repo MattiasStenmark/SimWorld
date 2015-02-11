@@ -127,7 +127,7 @@ describe("creatureObject", function() {
 
 		})
 
-		describe("action walking", function(){
+		describe("when walking", function(){
 			it("creature should be able to walk", function() {
 				creature.walk();
 				expect(creature.getCurrentAction()).toEqual(constants.actionWalk);
@@ -163,31 +163,32 @@ describe("creatureObject", function() {
 			})
 		})
 
-		describe("action attacking", function(){
+		describe("when attacking", function(){
 			var victim;
 			beforeEach(function(){
 				creature.setPosition({x:0,y:0});
 				creature.setAlertRange(10);
 
-				victim = new creatureObject({x:2,y:2});
+				victim = new creatureObject();
+				victim.setPosition({x:2,y:2});
 				victim.setAction(constants.actionIdle);
 				victim.setActionTurns(10);
 				creature.addAlert(victim);
 			})
-			it("when creature attacks it stores victim in variable", function(){
+			it("creature stores its victim in variable", function(){
 				creature.executeEvaluateAndSetAction();
 				creature.executeAction();
 				var selectedAlert = creature.getSelectedAlert();
 
 				expect(selectedAlert.getId()).toBe(victim.getId());
 			})
-			it("when creature attacks it moves towards victim", function(){
+			it("creature moves towards victim", function(){
 				creature.executeEvaluateAndSetAction();
 				creature.executeAction();
 				var pos = creature.getCurrentPosition();
 				var dir = creature.getCurrentDirection();
-				expect(pos).toBe({x:1,y:1});
-				expect(dir).toBe({x:1,y:1});	
+				expect(pos).toEqual({x:1,y:1});
+				expect(dir).toEqual({x:1,y:1});	
 			})
 			it("when creature is close to victim action sets to fight", function(){
 
