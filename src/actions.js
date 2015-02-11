@@ -44,6 +44,8 @@ actions = function() {
 		currentPosition.y += direction.y;
 	};
 
+
+
 	module.getAlertsByType = function(me, alertType) {
 		var alerts = me.properties.alerts;
 		var filteredAlerts = [];
@@ -56,6 +58,10 @@ actions = function() {
 		return filteredAlerts;
 	};
 
+	module.getDirectionBasedOnTarget = function(basePosition, newPosition){
+
+		return {};
+	}
 
 	module.setNewAlertRangeByAction = function(creature){
 		var c = constantValues();

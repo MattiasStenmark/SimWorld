@@ -99,9 +99,14 @@ function creatureObject(id) {
 	};
 
 	module.executeAction = function(){
+		var me = this;
+		var updateSelectedAlert = function(){
+			var selAlert = me.getAlerts()[0];
+			me.setSelectedAlert(selAlert);
+		}
 		if(currentAction == constants.actionAttack){
-			var selAlert = this.getAlerts()[0];
-			this.setSelectedAlert(selAlert);
+			updateSelectedAlert();
+
 		}
 
 	}
