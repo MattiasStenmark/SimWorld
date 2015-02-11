@@ -44,4 +44,27 @@ describe("actionSpec", function() {
 
 	})
 
+	describe("validateIsWithinFightingRange when base is {0,0}", function(){
+		var basePosition;
+		beforeEach(function(){
+			basePosition = {x:0,y:0};
+		})
+
+		it("and target is {2,0}", function(){
+			var targetPosition = {x:2,y:0};
+			var fightingRange = b.validateIsWithinFightingRange(basePosition, targetPosition);
+			expect(fightingRange).toBeFalsy();
+		})
+		it("and target is {0,-20}", function(){
+			var targetPosition = {x:0,y:-20};
+			var fightingRange = b.validateIsWithinFightingRange(basePosition, targetPosition);
+			expect(fightingRange).toBeFalsy();
+		})
+		it("and target is {-1,-1}", function(){
+			var targetPosition = {x:-1,y:-1};
+			var fightingRange = b.validateIsWithinFightingRange(basePosition, targetPosition);
+			expect(fightingRange).toBeTruthy();
+		})
+	})
+
 })

@@ -191,7 +191,13 @@ describe("creatureObject", function() {
 				expect(dir).toEqual({x:1,y:1});	
 			})
 			it("when creature is close to victim action sets to fight", function(){
+				creature.setPosition({x:0,y:0});
+				creature.setAction(constants.actionAttack);
+				var victim = creature.getAlerts()[0];
+				victim.setPosition({x:0,y:1});
+				creature.executeEvaluateAndSetAction();
 
+				expect(creature.getCurrentAction()).toBe(constants.actionFight);
 			})
 			it("when creature attacks, it moves in creature running speed", function(){
 				

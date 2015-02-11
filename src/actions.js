@@ -45,7 +45,11 @@ actions = function() {
 			y:currentPosition.y += direction.y};
 	};
 
-
+	module.validateIsWithinFightingRange = function(myPosition, targetPosition){
+		var x = Math.abs(myPosition.x - targetPosition.x);
+		var y = Math.abs(myPosition.y - targetPosition.y);
+		return x <= 1 && y <= 1;
+	};
 
 	module.getAlertsByType = function(me, alertType) {
 		var alerts = me.properties.alerts;

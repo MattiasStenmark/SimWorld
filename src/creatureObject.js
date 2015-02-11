@@ -45,14 +45,6 @@ function creatureObject(id) {
 	module.getSelectedAlert = function(){
 		return selectedAlert;
 	}
-	module.executeEvaluateAndSetAction = function(){
-		if(alerts.length > 0){
-			this.setAction(constants.actionAttack);
-		}
-		else {
-			this.setAction();
-		}
-	};
 
 	module.walk = function(direction){
 		var me = this;
@@ -102,6 +94,37 @@ function creatureObject(id) {
 		}
 	};
 
+	module.executeEvaluateAndSetAction = function(){
+		var me = this;
+		var currentAction = me.getCurrentAction();
+
+		var isActionAttack = function(){
+			if(currentAction == constants.actionAttack){
+				return false;
+			}
+			return alerts.length > 0
+		}
+		var isActionFight = function(){
+			if(currentAction!= constants.actionAttack){
+				return false;
+			}
+			var myPos = me.getCurrentPosition();
+			var targetPos = me.getSelectedAlert().getCurrentPosition();
+			return action.validateIsWithinFightingRange(myPos, targetPos);
+		}
+
+		//attack if something is found in alert list
+		if(isActionAttack()){
+			this.setAction(constants.actionAttack);
+		}
+		else if(isActionFight){
+			this.setAction(constants.actionFight);
+		}
+		else {
+			this.setAction();
+		}
+	};
+
 	module.executeAction = function(){
 		var me = this;
 		var updateSelectedAlert = function(){
@@ -118,12 +141,17 @@ function creatureObject(id) {
 			var direction  = me.getCurrentDirection();
 			me.setPosition(_actions.validateNewPosition(currentPos, direction));
 		}
-		if(currentAction == constants.actionAttack){
-			updateSelectedAlert();
-			updateDirection();
-			updatePosition();
-		}
 
+		switch(currentAction){
+			case constants.actionAttack:
+				updateSelectedAlert();
+				updateDirection();
+				updatePosition();
+				break;
+			case constants.actionFight:
+				throw new exception('not implemented');
+				break;
+		}
 	}
 
 	module.setActionTurns = function(turns){
