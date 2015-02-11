@@ -54,14 +54,6 @@ describe("creatureObject", function() {
 				creature.walk();
 				expect(creature.getAlertRange()).toBe(5);
 			});
-/*
-		it("alertRange should be max if looking", function() {
-				creature.setBaseAlertRange(10);
-				creature.setAlertRange(1);
-				creature.look();
-				expect(creature.getAlertRange()).toBe(10);
-			})
-*/
 		}); 
 	})
 	
@@ -140,7 +132,7 @@ describe("creatureObject", function() {
 			})
 		})
 
-		describe("when walking", function(){
+		describe("when action is set to walking", function(){
 			it("creature should be able to execute walking as action", function() {
 				creature.setAction(constants.actionWalk);
 				creature.executeAction();
@@ -216,6 +208,28 @@ describe("creatureObject", function() {
 			it("when creature attacks, it moves in creature running speed", function(){
 				
 			})
+		})
+	
+		describe("when fighting", function(){
+			beforeEach(function(){
+				var victim = new creatureObject();
+				victim.setPosition({x:0,y:1});
+				
+				creature.setPosition({x:0,y:0});
+				creature.addAlert(victim);
+				creature.setSelectedAlert(victim);
+				creature.setAction(constants.actionFight);
+			})
+
+			it("creature should get a random attack point when created", function(){
+				var points = creature.getAttackPoints();
+				expect(points).toBeGreaterThan(0);
+			})
+			it("creature should get a random defence point when created", function(){
+				var points = creature.getDefencePoints();
+				expect(points).toBeGreaterThan(0);
+			})
+
 		})
 
 	})

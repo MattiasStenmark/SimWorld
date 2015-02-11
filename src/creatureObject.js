@@ -5,6 +5,9 @@ function creatureObject(id) {
 	var _baseAlertRange = 1;
 	var _id = id;
 
+	var attackPoints = _actions.randomMe(100);
+	var defencePoints = _actions.randomMe(100);
+
 	var currentAlertRange = 0;
 	var currentAction = '';
 	var currentPosition = {};
@@ -44,6 +47,12 @@ function creatureObject(id) {
 	};
 	module.getSelectedAlert = function(){
 		return selectedAlert;
+	}
+	module.getAttackPoints = function(){
+		return attackPoints;
+	}
+	module.getDefencePoints = function(){
+		return attackPoints;
 	}
 
 	module.walk = function(direction){
@@ -96,7 +105,6 @@ function creatureObject(id) {
 
 	module.executeEvaluateAndSetAction = function(){
 		var me = this;
-		var currentAction = me.getCurrentAction();
 
 		var isActionAttack = function(){
 			if(currentAction == constants.actionAttack){
@@ -112,6 +120,8 @@ function creatureObject(id) {
 			var targetPos = me.getSelectedAlert().getCurrentPosition();
 			return action.validateIsWithinFightingRange(myPos, targetPos);
 		}
+
+		var currentAction = me.getCurrentAction();
 
 		//attack if something is found in alert list
 		if(isActionAttack()){

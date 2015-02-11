@@ -112,6 +112,10 @@ actions = function() {
 		return actions[randomIndex];
 	}
 
+	module.randomMe = function(number){
+		return Math.floor(Math.random() * number) + 1;
+	}
+
 	module.getRandomActionTurns = function(){
 		var turns = Math.floor(Math.random() * 4) + 1;
 		return turns;
