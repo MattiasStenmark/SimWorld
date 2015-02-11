@@ -151,6 +151,8 @@ function creatureObject(id) {
 			case constants.actionFight:
 				throw new exception('not implemented');
 				break;
+			case constants.actionWalk:
+				break;
 		}
 	}
 

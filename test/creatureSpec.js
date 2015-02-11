@@ -112,24 +112,38 @@ describe("creatureObject", function() {
 
 		describe("validate action based on alertList", function(){
 			it("it must be ok to force a new action even if actionTurns is not zero", function(){
-				creature.setAction();	
+				creature.setAction();
 				creature.setAction('dosomething');
 				expect(creature.getCurrentAction()).toBe("dosomething");
 			})
 
-			it("action should be set to 'attacking' if alertList is not empty", function(){
-				var alert = new creatureObject();
-				creature.addAlert(alert);
-				
-				creature.executeEvaluateAndSetAction();
-				expect(creature.getCurrentAction()).toBe(constants.actionAttack);
-			})
+			describe("When alert list is not empty", function(){
+				var alert;
+				beforeEach(function(){
+					alert = new creatureObject();
+					creature.addAlert(alert);
+				})
 
+				it("action should be set to 'attacking'", function(){
+					creature.executeEvaluateAndSetAction();
+					expect(creature.getCurrentAction()).toBe(constants.actionAttack);
+				})
+
+				it("action should be set to 'fighting' if target is in fighing range", function(){
+					creature.setAction(constants.actionAttack);
+					creature.setPosition({x:0,y:0});
+					alert.setPosition({x:1,y:0});
+
+					creature.executeEvaluateAndSetAction();
+					expect(creature.getCurrentAction()).toBe(constants.actionFight);
+				})
+			})
 		})
 
 		describe("when walking", function(){
-			it("creature should be able to walk", function() {
-				creature.walk();
+			it("creature should be able to execute walking as action", function() {
+				creature.setAction(constants.actionWalk);
+				creature.executeAction();
 				expect(creature.getCurrentAction()).toEqual(constants.actionWalk);
 			});
 
