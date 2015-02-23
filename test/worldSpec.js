@@ -11,6 +11,12 @@ describe("worldObject", function(){
 		expect(world.getSize()).toEqual({minX: -100, maxX:100, minY:-100, maxY:100});
 	});
 
+	it("should be avbe to create a new world and get a random size by default", function(){
+		world = new worldObject();
+		expect(world.getSize().x).not.toBe(0);
+		expect(world.getSize().y).not.toBe(0);
+	});
+
 	describe("When world exists", function(){
 		it("should be able to add a creature at random position depending on world size", function(){
 			world.addCreature();

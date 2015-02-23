@@ -5,7 +5,7 @@
 
 function worldObject() {
 	var _size = {};
-	var _creatures = []; 
+	var _creatures = []; 	
 	var module = {};
 	var index = 0;
 	
@@ -14,7 +14,7 @@ function worldObject() {
 	};
 	module.setSize = function(size){
 		_size = size;
-	}
+	}		
 
 	module.setSize = function(size){
 		_size = {
@@ -118,5 +118,6 @@ function worldObject() {
 			creature.setAlerts(alertList);
 		}
 	}
+
 	return module;
 }
