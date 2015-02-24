@@ -1,9 +1,13 @@
 var world = new worldObject();
 var g = new graphics();
 
+var canvasHovering = function(){
+	var a = 1;
+}
+
 var writeWorld = function(size){
 	var canvas = "<canvas id='myCanvas' width='"+size.maxX*2+"' height='"+size.maxY*2+"' "+
-	"style='border:1px solid #d3d3d3;'>"+
+	"style='border:1px solid #d3d3d3;' onmousemove='canvasHovering()''>"+
     "Your browser does not support the HTML5 canvas tag.</canvas>";
 	document.write(canvas);
 
