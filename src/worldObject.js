@@ -64,8 +64,8 @@ function worldObject() {
 		var position = {};
 		do {
 			position =  {
-				x : Math.floor((Math.random() * (size.maxX*2)) - size.maxX),
-				y : Math.floor((Math.random() * (size.maxY*2)) - size.maxY)
+				x : Math.floor((Math.random() * (size.maxX*2))),
+				y : Math.floor((Math.random() * (size.maxY*2)))
 			};
 		} while(!this.isUniquePositionInWorld(position))
 		
